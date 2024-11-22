@@ -1,8 +1,8 @@
 import customtkinter as ctk
-from PIL import ImageTk
+from PIL import Image, ImageTk
 
-from config import *
-from utils import extract_pokemon_data
+from scripts.config import *
+from scripts.utils import extract_pokemon_data
 
 class App(ctk.CTk):
     def __init__(self):
@@ -11,8 +11,8 @@ class App(ctk.CTk):
         self.geometry(str(SCREEN_WIDTH) + 'x' + str(SCREEN_HEIGHT))
         self.resizable(False, False)
         
-        self.x = extract_pokemon_data('charmander')
-        print(self.x)
+        self.data = extract_pokemon_data('charmander')
+        
         
         
         
