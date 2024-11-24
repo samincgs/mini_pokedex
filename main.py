@@ -11,7 +11,8 @@ class App(ctk.CTk):
         self.geometry(str(SCREEN_WIDTH) + 'x' + str(SCREEN_HEIGHT))
         self.resizable(False, False)
         
-        self.data = extract_pokemon_data('charmander')
+        self.pokemon_choice = 'charmander'
+        self.data = extract_pokemon_data(self.pokemon_choice)
         
         
         
