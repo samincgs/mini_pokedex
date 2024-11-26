@@ -7,17 +7,14 @@ from scripts.utils import extract_pokemon_data
 class App(ctk.CTk):
     def __init__(self):
         super().__init__()
-        self.title('Pokemon Finder')
+        self.title('Mini Pokedex')
         self.geometry(str(SCREEN_WIDTH) + 'x' + str(SCREEN_HEIGHT))
         self.resizable(False, False)
         
         self.pokemon_choice = 'charmander'
         self.data = extract_pokemon_data(self.pokemon_choice)
         
-        
-        
-        
-        
+
 if __name__ == '__main__':
     app = App()
     app.mainloop()
