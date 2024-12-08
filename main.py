@@ -23,22 +23,50 @@ class App(ctk.CTk):
         self.img_label = ctk.CTkLabel(self, text='')
         self.img_label.pack()
         
+        self.type_label = ctk.CTkLabel(self, text='')
+        self.type_label.pack()
+        
+        self.ability_label = ctk.CTkLabel(self, text='')
+        self.ability_label.pack()
+        
         self.update_pokemon()
+    
+    def not_found(self):
+        self.current_pokemon = None
+        self.ability_label.forget()
+        self.img_label.forget()
+        self.type_label.forget()
     
     def update_pokemon(self):
         if self.current_pokemon != self.pokemon_choice.get():
             self.data = extract_pokemon_data(self.pokemon_choice.get())
             if self.data:
                 self.current_pokemon = self.pokemon_choice.get()
-                self.poke_img = ctk.CTkImage(convert_into_photo(self.data['sprite']), size=(200, 200))
-                self.img_label.configure(image=self.poke_img, text ='')
+                self.update_image()
+                self.update_type()
+                self.update_ability()
             else:
-                self.current_pokemon = None
-                self.img_label.configure(image='', text='')
-                 
-           
+                self.not_found()
+    
+    def update_image(self):
+        self.poke_img = ctk.CTkImage(convert_into_photo(self.data['sprite']), size=(200, 200))
+        self.img_label.configure(image=self.poke_img, text ='')
+        self.img_label.pack()
         
+    def update_ability(self):
+        for ability in self.data['abilities']:
+            self.ability_label.configure(text=f'{ability['ability']['name']}')
+            self.ability_label.pack()
+            
+    def update_type(self):
+        types = ''
+        for p_type in self.data['types']:
+            types += p_type['type']['name'] + '\t'
         
+        self.type_label.configure(text=types)
+        self.type_label.pack()
+        
+   
 if __name__ == '__main__':
     app = App()
     app.mainloop()

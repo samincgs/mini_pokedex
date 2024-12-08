@@ -1,6 +1,6 @@
 import requests
 from io import BytesIO
-from PIL import Image, ImageTk
+from PIL import Image
 from requests.exceptions import JSONDecodeError
 from .config import POKEAPI_URL
 
@@ -33,13 +33,12 @@ def extract_pokemon_data(pokemon):
     return data
             
             
-def convert_into_photo(url):
+def convert_into_photo(url, size=(200, 200)):
     res = requests.get(url)
     res.raise_for_status()
     
     image = BytesIO(res.content)
-    img = Image.open(image).resize((200, 200))
-    # poke_img = ImageTk.PhotoImage(img)
+    img = Image.open(image).resize(size)
     
     return img
     
