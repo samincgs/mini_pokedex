@@ -8,7 +8,7 @@ def get_pokemon_data(pokemon):
     try:
         r = requests.get(POKEAPI_URL + pokemon)
     except JSONDecodeError():
-        r = False
+        r = None
         
     return r
 
@@ -31,8 +31,7 @@ def extract_pokemon_data(pokemon):
         data['abilities'] = p['abilities']
     
     return data
-            
-            
+                        
 def convert_into_photo(url, size=(200, 200)):
     res = requests.get(url)
     res.raise_for_status()

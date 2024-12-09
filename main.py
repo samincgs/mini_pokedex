@@ -1,5 +1,5 @@
 import customtkinter as ctk
-from PIL import Image, ImageTk
+from PIL import Image
 
 from scripts.config import *
 from scripts.utils import extract_pokemon_data, convert_into_photo
@@ -11,7 +11,7 @@ class App(ctk.CTk):
         self.geometry(str(SCREEN_WIDTH) + 'x' + str(SCREEN_HEIGHT))
         self.resizable(False, False)
         
-        self.pokemon_choice = ctk.StringVar(self, 'charmander')
+        self.pokemon_choice = ctk.StringVar(self, 'axew')
         self.current_pokemon = None
         
         self.entry = ctk.CTkEntry(self, placeholder_text='text', textvariable=self.pokemon_choice)
@@ -21,21 +21,24 @@ class App(ctk.CTk):
         self.submit_button.pack()
         
         self.img_label = ctk.CTkLabel(self, text='')
-        self.img_label.pack()
         
         self.type_label = ctk.CTkLabel(self, text='')
-        self.type_label.pack()
+        self.type_label2 = ctk.CTkLabel(self, text='')
+        
+        
+        # self.type_label3 = ctk.CTkLabel(self)
+        # self.type_label3.pack()
         
         self.ability_label = ctk.CTkLabel(self, text='')
-        self.ability_label.pack()
-        
+                
         self.update_pokemon()
     
     def not_found(self):
         self.current_pokemon = None
-        self.ability_label.forget()
         self.img_label.forget()
+        self.ability_label.forget()
         self.type_label.forget()
+        self.type_label2.forget()
     
     def update_pokemon(self):
         if self.current_pokemon != self.pokemon_choice.get():
@@ -49,7 +52,7 @@ class App(ctk.CTk):
                 self.not_found()
     
     def update_image(self):
-        self.poke_img = ctk.CTkImage(convert_into_photo(self.data['sprite']), size=(200, 200))
+        self.poke_img = ctk.CTkImage(convert_into_photo(self.data['sprite']), size=POKE_IMG_SIZE)
         self.img_label.configure(image=self.poke_img, text ='')
         self.img_label.pack()
         
@@ -59,12 +62,17 @@ class App(ctk.CTk):
             self.ability_label.pack()
             
     def update_type(self):
-        types = ''
-        for p_type in self.data['types']:
-            types += p_type['type']['name'] + '\t'
-        
-        self.type_label.configure(text=types)
+        for idx, type in enumerate(self.data['types']):
+            t = type['type']['name']
+            img = ctk.CTkImage(Image.open('images/types/' + t + '.png'), None, TYPE_IMG_SIZE)
+            if idx == 0:
+                self.type_label.configure(image=img)
+            else:
+                self.type_label2.configure(image=img)
+            
+            
         self.type_label.pack()
+        self.type_label2.pack()
         
    
 if __name__ == '__main__':
