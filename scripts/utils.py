@@ -19,16 +19,24 @@ def extract_pokemon_data(pokemon):
     if p:
         p = p.json()
         #pokemon name (still get from api even tho we have pokemon parameter since it can be a number)
-        data['name'] = p['name']
+        data.update({'name' : p['name'], 
+                     'types': p['types'], 
+                     'sprite': p['sprites']['front_default'], 
+                     'abilities': p['abilities'],
+                     'moves': p['moves'],
+                     'height': p['height'],
+                     'weight': p['weight']
+                     })
+        # data['name'] = p['name']
         
-        #pokemon types 
-        data['types'] = p['types']
+        # #pokemon types 
+        # data['types'] = p['types']
         
-        # sprites
-        data['sprite'] = p['sprites']['front_default']
+        # # sprites
+        # data['sprite'] = p['sprites']['front_default']
         
-        #abilities
-        data['abilities'] = p['abilities']
+        # #abilities
+        # data['abilities'] = p['abilities']
     
     return data
                         

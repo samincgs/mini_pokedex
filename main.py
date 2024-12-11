@@ -65,10 +65,12 @@ class App(ctk.CTk):
         for idx, type in enumerate(self.data['types']):
             t = type['type']['name']
             img = ctk.CTkImage(Image.open('images/types/' + t + '.png'), None, TYPE_IMG_SIZE)
-            if idx == 0:
+            if idx == 0: # first type
                 self.type_label.configure(image=img)
-            else:
+            if idx == 1: # second type
                 self.type_label2.configure(image=img)
+            else:
+                self.type_label2.forget() # fix issue where second label doesnt go away
             
             
         self.type_label.pack()
